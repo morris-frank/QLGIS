@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "Polygon fixture"},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.90, 52.35],
+            [5.05, 52.35],
+            [5.05, 52.42],
+            [4.90, 52.42],
+            [4.90, 52.35]
+          ]
+        ]
+      }
+    }
+  ]
+}

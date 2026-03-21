@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "Line fixture"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [4.84, 52.35],
+          [4.92, 52.37],
+          [5.01, 52.41]
+        ]
+      }
+    }
+  ]
+}

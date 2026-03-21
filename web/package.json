@@ -1,0 +1,22 @@
+{
+  "name": "qlgis-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test": "tsx --test ./test/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "geotiff": "^3.0.5",
+    "geotiff-geokeys-to-proj4": "^2024.4.13",
+    "maplibre-gl": "^5.21.0",
+    "proj4": "^2.20.4"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
+

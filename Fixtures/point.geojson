@@ -1,0 +1,10 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "Point fixture"},
+      "geometry": {"type": "Point", "coordinates": [4.899, 52.372]}
+    }
+  ]
+}

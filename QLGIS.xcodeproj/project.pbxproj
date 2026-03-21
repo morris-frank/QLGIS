@@ -1,0 +1,860 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1253D6CE372631D23238D744 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
+		30025FDB01B4CEE954ED4A6E /* PreviewDataResponseBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB2C321889CBA930024A86D /* PreviewDataResponseBuilderTests.swift */; };
+		361616590BCD6C892EB67163 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
+		3FF0620CA0B097E455DF1253 /* PreviewSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D727DD426A5F35A14250D0F2 /* PreviewSchemeHandler.swift */; };
+		40AAEA8BEEF0D5F7C4E098AE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60CFD9A4E96690C89D398D83 /* WebKit.framework */; };
+		575591B311C73CBD4D992914 /* PreviewFileKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F24541F9F53A0E564389B /* PreviewFileKind.swift */; };
+		60B9CC3BB3DDF249AFD162E4 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD5F5E010E14C3A6375D7E0 /* PreviewViewController.swift */; };
+		630D319A3570E9535EC80B3F /* QLGISCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; };
+		6385E1D0F55791E9C6A39FAF /* QLGISApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D1E031824E66F714E25717 /* QLGISApp.swift */; };
+		7469C978976C83AAF07B60AC /* PreviewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89CE9A03C4DC4D08B9770B /* PreviewError.swift */; };
+		7B7BD3BBD7A1449C3502E9CC /* PreviewDataResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BDEAB578315BB7031CBEC0 /* PreviewDataResponseBuilder.swift */; };
+		8E7F42AD69DA44D0187AE08F /* PreviewFileKindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A28A455EFFAF6D50CCF0AA5 /* PreviewFileKindTests.swift */; };
+		9ACA4A3AB3414803874E11D2 /* QLGISCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; };
+		A0F74E5E6EE54277A984C0C5 /* PreviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C716ADDB58EFC5B200119E9 /* PreviewConfiguration.swift */; };
+		ACFE1C44D5C0BBCD59B0657C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
+		BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */; };
+		C532ADF921BE84120A8B80FE /* PreviewBootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3058DFD9D1B318C73067769 /* PreviewBootstrapTests.swift */; };
+		D6D1C5762AB186353DC3FEFB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
+		E1E25F702FBFDAA2E0E76B8C /* QLGISCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; };
+		EB5E047334D7F9862A40A4B9 /* PreviewBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969E9405A4161BF9E335C78 /* PreviewBootstrap.swift */; };
+		EBE00B0596D44993FCB7DAF3 /* QuickLookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A39F523981FE3D0165874F83 /* QuickLookUI.framework */; };
+		FC4301096A6F5DF0713CF1E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB54E0C0D454E1F3ADA80C9 /* ContentView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0DDC95DE73CDF934E0E35861 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FDFA808C8DB8BCBD2DB1366 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70AB886B5AA33E2DF0C0ED8D;
+			remoteInfo = QLGISPreviewExtension;
+		};
+		75F1135CDDE93C16D605AE2A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FDFA808C8DB8BCBD2DB1366 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 593484924627D75F3F546C0B;
+			remoteInfo = QLGISCore;
+		};
+		B49768CFA332A7918A38E50C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FDFA808C8DB8BCBD2DB1366 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 593484924627D75F3F546C0B;
+			remoteInfo = QLGISCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		097C542526C0F1F79C4C8797 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5C3F8C9C7D68BEB0687CB5A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9ACA4A3AB3414803874E11D2 /* QLGISCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QLGISPreviewExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		21BDEAB578315BB7031CBEC0 /* PreviewDataResponseBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewDataResponseBuilder.swift; sourceTree = "<group>"; };
+		28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QLGISCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30D1E031824E66F714E25717 /* QLGISApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QLGISApp.swift; sourceTree = "<group>"; };
+		3969E9405A4161BF9E335C78 /* PreviewBootstrap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewBootstrap.swift; sourceTree = "<group>"; };
+		3CB54E0C0D454E1F3ADA80C9 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3DD5F5E010E14C3A6375D7E0 /* PreviewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		4B42437AFCAD4FBD32112428 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		60CFD9A4E96690C89D398D83 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = "<group>"; };
+		6A28A455EFFAF6D50CCF0AA5 /* PreviewFileKindTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewFileKindTests.swift; sourceTree = "<group>"; };
+		7429F297A543F630096D5AE3 /* QLGISCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QLGISCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EB2C321889CBA930024A86D /* PreviewDataResponseBuilderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewDataResponseBuilderTests.swift; sourceTree = "<group>"; };
+		8C716ADDB58EFC5B200119E9 /* PreviewConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewConfiguration.swift; sourceTree = "<group>"; };
+		8D60AD68B6F8DC0124C12580 /* QLGIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLGIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E2F24541F9F53A0E564389B /* PreviewFileKind.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewFileKind.swift; sourceTree = "<group>"; };
+		A39F523981FE3D0165874F83 /* QuickLookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookUI.framework; path = System/Library/Frameworks/QuickLookUI.framework; sourceTree = "<group>"; };
+		AD40B88AC68B2F37F746EF19 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		D727DD426A5F35A14250D0F2 /* PreviewSchemeHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewSchemeHandler.swift; sourceTree = "<group>"; };
+		E3058DFD9D1B318C73067769 /* PreviewBootstrapTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewBootstrapTests.swift; sourceTree = "<group>"; };
+		E902CAD58760377229EF8649 /* Base.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = Config/Base.xcconfig; sourceTree = "<group>"; };
+		FB89CE9A03C4DC4D08B9770B /* PreviewError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewError.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4025F3D34E345214C1F703DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				361616590BCD6C892EB67163 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		462F875334DC5478E96C2BE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1253D6CE372631D23238D744 /* Cocoa.framework in Frameworks */,
+				630D319A3570E9535EC80B3F /* QLGISCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4795EB904162D0064E394892 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACFE1C44D5C0BBCD59B0657C /* Cocoa.framework in Frameworks */,
+				EBE00B0596D44993FCB7DAF3 /* QuickLookUI.framework in Frameworks */,
+				40AAEA8BEEF0D5F7C4E098AE /* WebKit.framework in Frameworks */,
+				E1E25F702FBFDAA2E0E76B8C /* QLGISCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87A18D0D6BE844A0CD778107 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6D1C5762AB186353DC3FEFB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00AB2FF5E94563B4F5565299 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D60AD68B6F8DC0124C12580 /* QLGIS.app */,
+				28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */,
+				1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */,
+				7429F297A543F630096D5AE3 /* QLGISCoreTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		145032E2BF33EDC298B0920B = {
+			isa = PBXGroup;
+			children = (
+				00AB2FF5E94563B4F5565299 /* Products */,
+				50EDD96F162CBC282D2A8912 /* Frameworks */,
+				E902CAD58760377229EF8649 /* Base.xcconfig */,
+				5BE261209F40EDDA602015F9 /* QLGIS */,
+				33AFDEFA923A6006F710FDDF /* QLGISCore */,
+				5C43FEBD26FDFDE788257808 /* QLGISPreviewExtension */,
+				6F0E1B53317477A07BF99090 /* QLGISCoreTests */,
+			);
+			sourceTree = "<group>";
+		};
+		33AFDEFA923A6006F710FDDF /* QLGISCore */ = {
+			isa = PBXGroup;
+			children = (
+				3969E9405A4161BF9E335C78 /* PreviewBootstrap.swift */,
+				21BDEAB578315BB7031CBEC0 /* PreviewDataResponseBuilder.swift */,
+				FB89CE9A03C4DC4D08B9770B /* PreviewError.swift */,
+				8E2F24541F9F53A0E564389B /* PreviewFileKind.swift */,
+			);
+			name = QLGISCore;
+			path = QLGISCore;
+			sourceTree = "<group>";
+		};
+		50EDD96F162CBC282D2A8912 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A8D5938D513E878B078F087 /* OS X */,
+				A39F523981FE3D0165874F83 /* QuickLookUI.framework */,
+				60CFD9A4E96690C89D398D83 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5A8D5938D513E878B078F087 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				AD40B88AC68B2F37F746EF19 /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		5BE261209F40EDDA602015F9 /* QLGIS */ = {
+			isa = PBXGroup;
+			children = (
+				3CB54E0C0D454E1F3ADA80C9 /* ContentView.swift */,
+				30D1E031824E66F714E25717 /* QLGISApp.swift */,
+				4B42437AFCAD4FBD32112428 /* Info.plist */,
+			);
+			name = QLGIS;
+			path = QLGIS;
+			sourceTree = "<group>";
+		};
+		5C43FEBD26FDFDE788257808 /* QLGISPreviewExtension */ = {
+			isa = PBXGroup;
+			children = (
+				8C716ADDB58EFC5B200119E9 /* PreviewConfiguration.swift */,
+				D727DD426A5F35A14250D0F2 /* PreviewSchemeHandler.swift */,
+				3DD5F5E010E14C3A6375D7E0 /* PreviewViewController.swift */,
+			);
+			name = QLGISPreviewExtension;
+			path = QLGISPreviewExtension;
+			sourceTree = "<group>";
+		};
+		6F0E1B53317477A07BF99090 /* QLGISCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				E3058DFD9D1B318C73067769 /* PreviewBootstrapTests.swift */,
+				7EB2C321889CBA930024A86D /* PreviewDataResponseBuilderTests.swift */,
+				6A28A455EFFAF6D50CCF0AA5 /* PreviewFileKindTests.swift */,
+			);
+			name = QLGISCoreTests;
+			path = QLGISCoreTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		84319BDBAEC06E89810927D9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3937DE4D2C1025F1DF789853 /* QLGIS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BD7A87D9451E8BF8DDBC923 /* Build configuration list for PBXNativeTarget "QLGIS" */;
+			buildPhases = (
+				E8BE1EB92A5CDB7E684BD7B1 /* Sources */,
+				87A18D0D6BE844A0CD778107 /* Frameworks */,
+				CF5E1C9DA28A3EFB5C88F31C /* Resources */,
+				097C542526C0F1F79C4C8797 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA7DA130BEE95B2D734AE68A /* PBXTargetDependency */,
+			);
+			name = QLGIS;
+			productName = QLGIS;
+			productReference = 8D60AD68B6F8DC0124C12580 /* QLGIS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3FAEF8A1A5FB8191570D779E /* QLGISCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4405FB799210B78311EBAF53 /* Build configuration list for PBXNativeTarget "QLGISCoreTests" */;
+			buildPhases = (
+				506360CB353A075F1E4A020A /* Sources */,
+				462F875334DC5478E96C2BE2 /* Frameworks */,
+				9E834E4A8E53F02FED8C16AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				19E22321A46F1CB59637CEC2 /* PBXTargetDependency */,
+			);
+			name = QLGISCoreTests;
+			productName = QLGISCoreTests;
+			productReference = 7429F297A543F630096D5AE3 /* QLGISCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		593484924627D75F3F546C0B /* QLGISCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3B6A3A9C2C9272DF3F97F5B /* Build configuration list for PBXNativeTarget "QLGISCore" */;
+			buildPhases = (
+				84319BDBAEC06E89810927D9 /* Headers */,
+				3E5B1E6B8E67E76DD6F45598 /* Sources */,
+				4025F3D34E345214C1F703DF /* Frameworks */,
+				2D7B8AC808410A7BD3394031 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QLGISCore;
+			productName = QLGISCore;
+			productReference = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		70AB886B5AA33E2DF0C0ED8D /* QLGISPreviewExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01F0739CCEC0E3DC2D0A34B4 /* Build configuration list for PBXNativeTarget "QLGISPreviewExtension" */;
+			buildPhases = (
+				E886FB4155C480DF29D3A197 /* Sources */,
+				4795EB904162D0064E394892 /* Frameworks */,
+				E5BBA9AB8F1636AF17ED45AF /* Resources */,
+				D5C3F8C9C7D68BEB0687CB5A /* Embed Frameworks */,
+				8C45DA2ABC19C3E9C696B57E /* Build Web Preview */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6EC19E3ADF03B3724477609D /* PBXTargetDependency */,
+			);
+			name = QLGISPreviewExtension;
+			productName = QLGISPreviewExtension;
+			productReference = 1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0FDFA808C8DB8BCBD2DB1366 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1600;
+				ORGANIZATIONNAME = QLGIS;
+			};
+			buildConfigurationList = 991E6106DC86E49176872D12 /* Build configuration list for PBXProject "QLGIS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 145032E2BF33EDC298B0920B;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 00AB2FF5E94563B4F5565299 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3937DE4D2C1025F1DF789853 /* QLGIS */,
+				593484924627D75F3F546C0B /* QLGISCore */,
+				70AB886B5AA33E2DF0C0ED8D /* QLGISPreviewExtension */,
+				3FAEF8A1A5FB8191570D779E /* QLGISCoreTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2D7B8AC808410A7BD3394031 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9E834E4A8E53F02FED8C16AA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF5E1C9DA28A3EFB5C88F31C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5BBA9AB8F1636AF17ED45AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8C45DA2ABC19C3E9C696B57E /* Build Web Preview */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Web Preview";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -euo pipefail\n\nexport PATH=\"/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH\"\nWEB_ROOT=\"${SRCROOT}/web\"\n\nif [ ! -d \"${WEB_ROOT}/node_modules\" ]; then\n  echo \"error: Missing web/node_modules. Run 'npm install' in ${WEB_ROOT} first.\"\n  exit 1\nfi\n\ncd \"${WEB_ROOT}\"\nnpm run build\n\nDESTINATION=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Web\"\nmkdir -p \"${DESTINATION}\"\nrsync -a --delete \"${WEB_ROOT}/dist/\" \"${DESTINATION}/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E5B1E6B8E67E76DD6F45598 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB5E047334D7F9862A40A4B9 /* PreviewBootstrap.swift in Sources */,
+				7B7BD3BBD7A1449C3502E9CC /* PreviewDataResponseBuilder.swift in Sources */,
+				7469C978976C83AAF07B60AC /* PreviewError.swift in Sources */,
+				575591B311C73CBD4D992914 /* PreviewFileKind.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506360CB353A075F1E4A020A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C532ADF921BE84120A8B80FE /* PreviewBootstrapTests.swift in Sources */,
+				30025FDB01B4CEE954ED4A6E /* PreviewDataResponseBuilderTests.swift in Sources */,
+				8E7F42AD69DA44D0187AE08F /* PreviewFileKindTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E886FB4155C480DF29D3A197 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0F74E5E6EE54277A984C0C5 /* PreviewConfiguration.swift in Sources */,
+				3FF0620CA0B097E455DF1253 /* PreviewSchemeHandler.swift in Sources */,
+				60B9CC3BB3DDF249AFD162E4 /* PreviewViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8BE1EB92A5CDB7E684BD7B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC4301096A6F5DF0713CF1E3 /* ContentView.swift in Sources */,
+				6385E1D0F55791E9C6A39FAF /* QLGISApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		19E22321A46F1CB59637CEC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QLGISCore;
+			target = 593484924627D75F3F546C0B /* QLGISCore */;
+			targetProxy = 75F1135CDDE93C16D605AE2A /* PBXContainerItemProxy */;
+		};
+		6EC19E3ADF03B3724477609D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QLGISCore;
+			target = 593484924627D75F3F546C0B /* QLGISCore */;
+			targetProxy = B49768CFA332A7918A38E50C /* PBXContainerItemProxy */;
+		};
+		AA7DA130BEE95B2D734AE68A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QLGISPreviewExtension;
+			target = 70AB886B5AA33E2DF0C0ED8D /* QLGISPreviewExtension */;
+			targetProxy = 0DDC95DE73CDF934E0E35861 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		29D2731529746D16CC92AD6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "";
+			};
+			name = Release;
+		};
+		2C3750CEC440B94CCCC143C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		45B2C4029BB396BDE0F82A8E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = QLGISPreviewExtension/QLGISPreviewExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = QLGISPreviewExtension/Info.plist;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISPreviewExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		55036B11543C139436EB1941 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCore;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6663BDBC2BD1E3952E48BD3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "";
+			};
+			name = Debug;
+		};
+		747DBF16E02DF3CFF984FABE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = QLGISPreviewExtension/QLGISPreviewExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = QLGISPreviewExtension/Info.plist;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISPreviewExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		74D1F6AE0F57B0EB020BDBC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCore;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7B9D22E640F2B575AF082542 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = QLGIS/Info.plist;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		899097DE55C684D08C1D713E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E902CAD58760377229EF8649 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CLANG_ENABLE_EXPLICIT_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = QLGIS/Info.plist;
+				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		EFBE28935D33D212DE5B3BB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01F0739CCEC0E3DC2D0A34B4 /* Build configuration list for PBXNativeTarget "QLGISPreviewExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				747DBF16E02DF3CFF984FABE /* Release */,
+				45B2C4029BB396BDE0F82A8E /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0BD7A87D9451E8BF8DDBC923 /* Build configuration list for PBXNativeTarget "QLGIS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				899097DE55C684D08C1D713E /* Release */,
+				7B9D22E640F2B575AF082542 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4405FB799210B78311EBAF53 /* Build configuration list for PBXNativeTarget "QLGISCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29D2731529746D16CC92AD6A /* Release */,
+				6663BDBC2BD1E3952E48BD3A /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		991E6106DC86E49176872D12 /* Build configuration list for PBXProject "QLGIS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFBE28935D33D212DE5B3BB3 /* Debug */,
+				2C3750CEC440B94CCCC143C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3B6A3A9C2C9272DF3F97F5B /* Build configuration list for PBXNativeTarget "QLGISCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55036B11543C139436EB1941 /* Release */,
+				74D1F6AE0F57B0EB020BDBC5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0FDFA808C8DB8BCBD2DB1366 /* Project object */;
+}
