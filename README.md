@@ -22,7 +22,7 @@ QLGIS is a macOS 12+ Quick Look preview extension for geospatial data.
 - `ruby scripts/generate_xcodeproj.rb` regenerates the Xcode project.
 - `python3 scripts/generate_fixtures.py` regenerates the test and demo fixtures.
 - `npm test` inside `web/` runs the browser-side unit tests.
-- `scripts/release.sh` archives, exports, zips, and optionally notarizes a Developer ID release build.
+- CI release builds (archive, export, notarize, zip) live in `.github/workflows/release.yml`.
 
 ## Manual Preview Testing
 
@@ -35,8 +35,8 @@ QLGIS is a macOS 12+ Quick Look preview extension for geospatial data.
 
 1. Set a real signing team in Xcode and use a valid Developer ID Application certificate.
 2. Keep `Config/Secrets.xcconfig` populated and `web/node_modules` installed.
-3. Archive and export locally with `scripts/release.sh`.
-4. To notarize during the same run, create a notarytool keychain profile and set `NOTARYTOOL_PROFILE=<profile-name>`.
+3. Archive and export locally from Xcode (Product → Archive, then Distribute App using `Config/ExportOptions.DeveloperID.plist`), or mirror the `xcodebuild` / `ditto` / optional `notarytool` steps in `.github/workflows/release.yml`.
+4. To notarize from the command line, create a notarytool keychain profile and pass `--keychain-profile` to `notarytool submit`, then `xcrun stapler staple` on the app before zipping.
 
 ### GitHub Actions Release Automation
 
@@ -52,16 +52,13 @@ Repository secrets required by the workflow:
 - `APPLE_TEAM_ID`
 - `APPLE_APP_SPECIFIC_PASSWORD`
 
-The workflow creates `Config/Secrets.xcconfig`, imports the Developer ID certificate into a temporary keychain, stores notarization credentials with `notarytool`, runs `scripts/release.sh`, and uploads the resulting zip to the GitHub Release for that tag.
+The workflow creates `Config/Secrets.xcconfig`, imports the Developer ID certificate into a temporary keychain, stores notarization credentials with `notarytool`, archives and exports with `xcodebuild`, notarizes and staples when credentials are present, zips with `ditto`, and uploads the resulting zip to the GitHub Release for that tag.
 
 Example:
 
 ```sh
-scripts/release.sh
-NOTARYTOOL_PROFILE=qlgis-notary scripts/release.sh
-
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-The export options used by the release script live in `Config/ExportOptions.DeveloperID.plist`.
+The export options used for release builds live in `Config/ExportOptions.DeveloperID.plist`.
