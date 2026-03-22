@@ -100,23 +100,32 @@ embed_frameworks_phase.dst_subfolder_spec = "10"
 embed_frameworks_phase.add_file_reference(core_target.product_reference, true)
 
 build_web_phase = extension_target.new_shell_script_build_phase("Build Web Preview")
+build_web_phase.always_out_of_date = "1"
+build_web_phase.output_paths = ["$(DERIVED_FILE_DIR)/web-preview-build.stamp"]
 build_web_phase.shell_script = <<~SCRIPT
   set -euo pipefail
 
   export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
   WEB_ROOT="${SRCROOT}/web"
+  NODE_BIN="$(command -v node || true)"
 
   if [ ! -d "${WEB_ROOT}/node_modules" ]; then
     echo "error: Missing web/node_modules. Run 'npm install' in ${WEB_ROOT} first."
     exit 1
   fi
 
-  cd "${WEB_ROOT}"
-  npm run build
+  if [ -z "${NODE_BIN}" ]; then
+    echo "error: Node.js is required to build the web preview bundle."
+    exit 1
+  fi
+
+  "${NODE_BIN}" "${WEB_ROOT}/scripts/build.mjs"
 
   DESTINATION="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Web"
   mkdir -p "${DESTINATION}"
   rsync -a --delete "${WEB_ROOT}/dist/" "${DESTINATION}/"
+
+  touch "${DERIVED_FILE_DIR}/web-preview-build.stamp"
 SCRIPT
 
 common_settings = {
@@ -165,6 +174,7 @@ configure_target(
   build_settings: common_settings.merge(
     "APPLICATION_EXTENSION_API_ONLY" => "YES",
     "CODE_SIGN_ENTITLEMENTS" => "QLGISPreviewExtension/QLGISPreviewExtension.entitlements",
+    "ENABLE_USER_SCRIPT_SANDBOXING" => "NO",
     "INFOPLIST_FILE" => "QLGISPreviewExtension/Info.plist",
     "LD_RUNPATH_SEARCH_PATHS" => "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks",
     "PRODUCT_BUNDLE_IDENTIFIER" => "com.qlgis.QLGIS.QLGISPreviewExtension",
