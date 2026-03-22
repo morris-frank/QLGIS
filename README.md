@@ -38,11 +38,30 @@ QLGIS is a macOS 12+ Quick Look preview extension for geospatial data.
 3. Archive and export locally with `scripts/release.sh`.
 4. To notarize during the same run, create a notarytool keychain profile and set `NOTARYTOOL_PROFILE=<profile-name>`.
 
+### GitHub Actions Release Automation
+
+The workflow at `.github/workflows/release.yml` builds, signs, notarizes, and publishes a GitHub Release when you push a tag like `v1.0.0`. It can also be run manually with the `release_tag` input.
+
+Repository secrets required by the workflow:
+
+- `MAPTILER_API_KEY`
+- `BUILD_CERTIFICATE_BASE64` as a base64-encoded Developer ID Application `.p12`
+- `P12_PASSWORD`
+- `KEYCHAIN_PASSWORD` for the temporary CI keychain
+- `APPLE_ID`
+- `APPLE_TEAM_ID`
+- `APPLE_APP_SPECIFIC_PASSWORD`
+
+The workflow creates `Config/Secrets.xcconfig`, imports the Developer ID certificate into a temporary keychain, stores notarization credentials with `notarytool`, runs `scripts/release.sh`, and uploads the resulting zip to the GitHub Release for that tag.
+
 Example:
 
 ```sh
 scripts/release.sh
 NOTARYTOOL_PROFILE=qlgis-notary scripts/release.sh
+
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 The export options used by the release script live in `Config/ExportOptions.DeveloperID.plist`.

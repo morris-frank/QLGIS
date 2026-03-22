@@ -15,6 +15,7 @@ APP_PATH="$EXPORT_PATH/$SCHEME.app"
 ZIP_PATH="${ZIP_PATH:-$RELEASE_ROOT/$SCHEME-macOS.zip}"
 NOTARY_ZIP_PATH="${NOTARY_ZIP_PATH:-$RELEASE_ROOT/$SCHEME-notarization.zip}"
 NOTARYTOOL_PROFILE="${NOTARYTOOL_PROFILE:-}"
+NOTARYTOOL_KEYCHAIN="${NOTARYTOOL_KEYCHAIN:-}"
 ALLOW_PROVISIONING_UPDATES="${ALLOW_PROVISIONING_UPDATES:-0}"
 
 if [[ ! -f "$PROJECT_PATH/project.pbxproj" ]]; then
@@ -60,7 +61,19 @@ if [[ -n "$NOTARYTOOL_PROFILE" ]]; then
   ditto -c -k --keepParent "$APP_PATH" "$NOTARY_ZIP_PATH"
 
   echo "Submitting for notarization with profile $NOTARYTOOL_PROFILE..."
-  xcrun notarytool submit "$NOTARY_ZIP_PATH" --keychain-profile "$NOTARYTOOL_PROFILE" --wait
+  notary_args=(
+    submit
+    "$NOTARY_ZIP_PATH"
+    --keychain-profile
+    "$NOTARYTOOL_PROFILE"
+    --wait
+  )
+
+  if [[ -n "$NOTARYTOOL_KEYCHAIN" ]]; then
+    notary_args+=(--keychain "$NOTARYTOOL_KEYCHAIN")
+  fi
+
+  xcrun notarytool "${notary_args[@]}"
 
   echo "Stapling notarization ticket..."
   xcrun stapler staple "$APP_PATH"
