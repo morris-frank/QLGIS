@@ -11,12 +11,13 @@
     "geotiff": "^3.0.5",
     "geotiff-geokeys-to-proj4": "^2024.4.13",
     "maplibre-gl": "^5.21.0",
+    "pmtiles": "^4.3.0",
     "proj4": "^2.20.4"
   },
   "devDependencies": {
+    "@types/node": "^22.13.14",
     "esbuild": "^0.25.1",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }
-

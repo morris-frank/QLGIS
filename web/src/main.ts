@@ -1,19 +1,30 @@
 import maplibregl, { Map } from "maplibre-gl";
 import { renderGeoJSONPreview } from "./renderers/geojson";
 import { renderGeoTIFFPreview } from "./renderers/geotiff";
+import { renderPMTilesPreview } from "./renderers/pmtiles";
 import "./styles.css";
-import type { Cleanup, PreviewBootstrap, Renderer } from "./types";
+import type { Cleanup, PreviewBootstrap, Renderer, PreviewMeta, SelectorConfig } from "./types";
 
 const renderers: Record<PreviewBootstrap["kind"], Renderer> = {
   geojson: renderGeoJSONPreview,
-  geotiff: renderGeoTIFFPreview
+  geotiff: renderGeoTIFFPreview,
+  pmtiles: renderPMTilesPreview
 };
 
+const mapElement = document.querySelector<HTMLDivElement>("#map");
+const metaEyebrowElement = document.querySelector<HTMLDivElement>("#meta-eyebrow");
+const metaTitleElement = document.querySelector<HTMLDivElement>("#meta-title");
+const metaDescriptionElement = document.querySelector<HTMLDivElement>("#meta-description");
+const selectorGroupElement = document.querySelector<HTMLLabelElement>("#selector-group");
+const selectorLabelElement = document.querySelector<HTMLSpanElement>("#selector-label");
+const selectorInputElement = document.querySelector<HTMLSelectElement>("#selector-input");
 const statusElement = document.querySelector<HTMLDivElement>("#status");
 const bannerElement = document.querySelector<HTMLDivElement>("#banner");
 
 let mapPromise: Promise<Map> | null = null;
 let activeCleanup: Cleanup | null = null;
+let selectorOnChange: ((value: string) => void) | null = null;
+let resizeObserverAttached = false;
 
 window.__QLGISNativeLog__ = logToNative;
 
@@ -52,10 +63,20 @@ async function renderPreview(bootstrap: PreviewBootstrap): Promise<void> {
       activeCleanup = null;
     }
 
+    setMeta({
+      description: defaultDescription(bootstrap.kind),
+      eyebrow: bootstrap.kind.toUpperCase(),
+      title: bootstrap.displayName
+    });
+    setSelector(null);
+    clearBanner();
+
     activeCleanup = await renderer({
       bootstrap,
       clearBanner,
       map,
+      setMeta,
+      setSelector,
       setStatus,
       showBanner
     });
@@ -75,10 +96,11 @@ async function ensureMap(styleURL: string): Promise<Map> {
 
   mapPromise = new Promise<Map>((resolve, reject) => {
     const map = new maplibregl.Map({
-      attributionControl: true,
+      attributionControl: {},
       container: "map",
       style: styleURL
     });
+    attachResizeHandling(map);
 
     map.on("error", (event) => {
       const message = stringifyError(event.error);
@@ -91,6 +113,7 @@ async function ensureMap(styleURL: string): Promise<Map> {
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.once("load", () => {
+      map.resize();
       logToNative("info", "base map loaded");
       resolve(map);
     });
@@ -102,6 +125,48 @@ async function ensureMap(styleURL: string): Promise<Map> {
   });
 
   return mapPromise;
+}
+
+function setMeta(meta: PreviewMeta): void {
+  if (metaEyebrowElement) {
+    metaEyebrowElement.textContent = meta.eyebrow;
+  }
+
+  if (metaTitleElement) {
+    metaTitleElement.textContent = meta.title;
+  }
+
+  if (metaDescriptionElement) {
+    metaDescriptionElement.textContent = meta.description ?? "";
+    metaDescriptionElement.hidden = !(meta.description?.trim().length);
+  }
+}
+
+function setSelector(config: SelectorConfig | null): void {
+  if (!selectorGroupElement || !selectorLabelElement || !selectorInputElement) {
+    return;
+  }
+
+  selectorOnChange = null;
+  selectorInputElement.replaceChildren();
+
+  if (!config || config.options.length < 2) {
+    selectorGroupElement.hidden = true;
+    return;
+  }
+
+  selectorGroupElement.hidden = false;
+  selectorLabelElement.textContent = config.label;
+
+  for (const option of config.options) {
+    const element = document.createElement("option");
+    element.value = option.value;
+    element.textContent = option.label;
+    selectorInputElement.appendChild(element);
+  }
+
+  selectorInputElement.value = config.value;
+  selectorOnChange = config.onChange;
 }
 
 function setStatus(message: string | null): void {
@@ -160,3 +225,35 @@ function stringifyError(error: unknown): string {
     return String(error);
   }
 }
+
+function attachResizeHandling(map: Map): void {
+  if (!mapElement || resizeObserverAttached) {
+    return;
+  }
+
+  const resizeMap = (): void => {
+    requestAnimationFrame(() => {
+      map.resize();
+    });
+  };
+
+  resizeObserverAttached = true;
+  new ResizeObserver(resizeMap).observe(mapElement);
+  window.addEventListener("resize", resizeMap);
+}
+
+function defaultDescription(kind: PreviewBootstrap["kind"]): string {
+  switch (kind) {
+    case "geojson":
+      return "Inspecting vector features on top of the basemap.";
+    case "geotiff":
+      return "Inspecting raster coverage on top of the basemap.";
+    case "pmtiles":
+      return "Inspecting tiled content from a PMTiles archive.";
+  }
+}
+
+selectorInputElement?.addEventListener("change", (event) => {
+  const nextValue = (event.target as HTMLSelectElement).value;
+  selectorOnChange?.(nextValue);
+});

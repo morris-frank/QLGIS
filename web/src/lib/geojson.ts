@@ -1,10 +1,17 @@
 import type { BoundsTuple } from "../types";
 import { expandDegenerateBounds } from "./bounds";
 
-export function prepareGeoJSONOverlay(rawText: string): { fitBounds: BoundsTuple; geojson: unknown } {
+export interface GeoJSONNumericAttribute {
+  key: string;
+  max: number;
+  min: number;
+}
+
+export function prepareGeoJSONOverlay(rawText: string): { fitBounds: BoundsTuple; geojson: unknown; numericAttributes: GeoJSONNumericAttribute[] } {
   const geojson = JSON.parse(rawText) as Record<string, unknown>;
   const fitBounds = computeGeoJSONBounds(geojson);
-  return { fitBounds, geojson };
+  const numericAttributes = detectNumericGeoJSONAttributes(geojson);
+  return { fitBounds, geojson, numericAttributes };
 }
 
 export function computeGeoJSONBounds(node: unknown): BoundsTuple {
@@ -90,6 +97,59 @@ function walkGeoJSON(node: Record<string, unknown>, visit: (coordinate: [number,
   }
 }
 
+export function detectNumericGeoJSONAttributes(node: unknown): GeoJSONNumericAttribute[] {
+  const stats = new Map<string, { max: number; min: number }>();
+
+  walkGeoJSONFeatures(node, (feature) => {
+    const properties = feature.properties;
+    if (!properties || typeof properties !== "object" || Array.isArray(properties)) {
+      return;
+    }
+
+    for (const [key, rawValue] of Object.entries(properties as Record<string, unknown>)) {
+      if (typeof rawValue !== "number" || !Number.isFinite(rawValue)) {
+        continue;
+      }
+
+      const existing = stats.get(key);
+      if (existing) {
+        existing.min = Math.min(existing.min, rawValue);
+        existing.max = Math.max(existing.max, rawValue);
+      } else {
+        stats.set(key, { min: rawValue, max: rawValue });
+      }
+    }
+  });
+
+  return [...stats.entries()]
+    .map(([key, value]) => ({
+      key,
+      max: value.max,
+      min: value.min
+    }))
+    .sort((left, right) => left.key.localeCompare(right.key));
+}
+
+function walkGeoJSONFeatures(node: unknown, visit: (feature: Record<string, unknown>) => void): void {
+  if (!node || typeof node !== "object") {
+    return;
+  }
+
+  const candidate = node as Record<string, unknown>;
+  switch (candidate.type) {
+    case "FeatureCollection":
+      for (const feature of safeArray(candidate.features)) {
+        walkGeoJSONFeatures(feature, visit);
+      }
+      return;
+    case "Feature":
+      visit(candidate);
+      return;
+    default:
+      return;
+  }
+}
+
 function visitLineString(value: unknown, visit: (coordinate: [number, number]) => void): void {
   for (const coordinate of safeArray(value)) {
     visitCoordinate(coordinate, visit);
@@ -113,4 +173,3 @@ function visitCoordinate(value: unknown, visit: (coordinate: [number, number]) =
 function safeArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
 }
-

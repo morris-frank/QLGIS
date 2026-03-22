@@ -32,6 +32,18 @@
                 <string>com.mauricefrank.geotiff</string>
             </array>
         </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>PMTiles</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.mauricefrank.pmtiles</string>
+            </array>
+        </dict>
     </array>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
@@ -75,6 +87,25 @@
                 </array>
                 <key>public.mime-type</key>
                 <string>image/tiff</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UTTypeConformsTo</key>
+            <array>
+                <string>public.data</string>
+            </array>
+            <key>UTTypeDescription</key>
+            <string>PMTiles Archive</string>
+            <key>UTTypeIdentifier</key>
+            <string>com.mauricefrank.pmtiles</string>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array>
+                    <string>pmtiles</string>
+                </array>
+                <key>public.mime-type</key>
+                <string>application/vnd.pmtiles</string>
             </dict>
         </dict>
     </array>

@@ -9,7 +9,18 @@
   <body>
     <div id="app">
       <div id="map"></div>
-      <div id="status" class="overlay overlay--status" hidden></div>
+      <div id="hud" class="hud">
+        <div class="hud__header">
+          <div id="meta-eyebrow" class="hud__eyebrow"></div>
+          <div id="meta-title" class="hud__title"></div>
+          <div id="meta-description" class="hud__description"></div>
+        </div>
+        <label id="selector-group" class="selector" hidden>
+          <span id="selector-label" class="selector__label"></span>
+          <select id="selector-input" class="selector__input"></select>
+        </label>
+        <div id="status" class="hud__status" hidden></div>
+      </div>
       <div id="banner" class="overlay overlay--banner" hidden></div>
     </div>
     <script src="./main.js"></script>

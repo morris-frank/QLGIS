@@ -2,6 +2,7 @@ import { fromArrayBuffer } from "geotiff";
 import geokeysToProj4 from "geotiff-geokeys-to-proj4";
 import proj4 from "proj4";
 import type { BoundsTuple, QuadCoordinates } from "../types";
+import { colorizeNormalizedValue, normalizeValue } from "./colorRamp";
 import { boundsFromCoordinates } from "./bounds";
 
 type NumericArray = ArrayLike<number>;
@@ -9,12 +10,21 @@ type ProjectionResult = {
   project: (x: number, y: number) => [number, number];
 };
 
+export interface GeoTIFFBand {
+  id: string;
+  label: string;
+  max: number;
+  min: number;
+  values: NumericArray;
+}
+
 export interface GeoTIFFOverlay {
+  bands: GeoTIFFBand[];
   coordinates: QuadCoordinates;
+  defaultSelection: string;
   fitBounds: BoundsTuple;
   height: number;
-  mode: "grayscale" | "rgb" | "rgba";
-  pixels: Uint8ClampedArray;
+  supportsComposite: boolean;
   width: number;
 }
 
@@ -26,7 +36,7 @@ export async function prepareGeoTIFFOverlay(buffer: ArrayBuffer): Promise<GeoTIF
   }
 
   const image = await tiff.getImage();
-  const fileDirectory = (image.fileDirectory ?? {}) as Record<string, unknown>;
+  const fileDirectory = (image.fileDirectory ?? {}) as unknown as Record<string, unknown>;
 
   if ("ModelTransformation" in fileDirectory || "ModelTransformationTag" in fileDirectory) {
     throw new Error("Rotated or skewed GeoTIFF files are not supported.");
@@ -57,24 +67,33 @@ export async function prepareGeoTIFFOverlay(buffer: ArrayBuffer): Promise<GeoTIF
   const coordinates = projectBounds(bounds, projection);
   const rasters = await image.readRasters({ interleave: false });
   const bandArrays = normalizeRasterArray(rasters);
+  const noDataValue = getNoDataValue(image);
 
   if (bandArrays.length !== samplesPerPixel) {
     throw new Error("GeoTIFF band data is inconsistent.");
   }
 
-  const { mode, pixels } = buildRGBAData(bandArrays, width * height);
+  const bands = bandArrays.map((values, index) => ({
+    id: `band:${index}`,
+    label: `Band ${index + 1}`,
+    max: computeBandRange(values, noDataValue).max,
+    min: computeBandRange(values, noDataValue).min,
+    values
+  }));
+  const supportsComposite = bandArrays.length >= 3;
 
   return {
+    bands,
     coordinates,
+    defaultSelection: supportsComposite ? "composite" : "band:0",
     fitBounds: boundsFromCoordinates(coordinates),
     height,
-    mode,
-    pixels,
+    supportsComposite,
     width
   };
 }
 
-export function drawOverlayCanvas(overlay: GeoTIFFOverlay): HTMLCanvasElement {
+export function drawOverlayCanvas(overlay: GeoTIFFOverlay, selection: string): HTMLCanvasElement {
   const canvas = document.createElement("canvas");
   canvas.width = overlay.width;
   canvas.height = overlay.height;
@@ -85,9 +104,38 @@ export function drawOverlayCanvas(overlay: GeoTIFFOverlay): HTMLCanvasElement {
   }
 
   const imageData = context.createImageData(overlay.width, overlay.height);
-  imageData.data.set(overlay.pixels);
+  imageData.data.set(renderSelectionPixels(overlay, selection));
   context.putImageData(imageData, 0, 0);
   return canvas;
+}
+
+export function renderSelectionPixels(overlay: GeoTIFFOverlay, selection: string): Uint8ClampedArray {
+  if (selection === "composite" && overlay.supportsComposite) {
+    return buildCompositeRGBAData(overlay.bands, overlay.width * overlay.height);
+  }
+
+  const band = overlay.bands.find((candidate) => candidate.id === selection) ?? overlay.bands[0];
+  return buildBandRGBAData(band, overlay.width * overlay.height);
+}
+
+export function describeGeoTIFFSelection(overlay: GeoTIFFOverlay, selection: string): string {
+  if (selection === "composite" && overlay.supportsComposite) {
+    return "Rendering the raster as a composite RGB overlay.";
+  }
+
+  const band = overlay.bands.find((candidate) => candidate.id === selection) ?? overlay.bands[0];
+  return `Coloring the raster by ${band.label}.`;
+}
+
+export function selectorOptionsForGeoTIFF(overlay: GeoTIFFOverlay): Array<{ label: string; value: string }> {
+  const options = overlay.supportsComposite ? [{ label: "Composite RGB", value: "composite" }] : [];
+  return [
+    ...options,
+    ...overlay.bands.map((band) => ({
+      label: band.label,
+      value: band.id
+    }))
+  ];
 }
 
 function projectBounds(bounds: BoundsTuple, projection: ProjectionResult): QuadCoordinates {
@@ -100,19 +148,21 @@ function projectBounds(bounds: BoundsTuple, projection: ProjectionResult): QuadC
   ];
 }
 
-function createProjection(geoKeys: Record<string, unknown>): ProjectionResult {
-  if (!geoKeys || Object.keys(geoKeys).length === 0) {
+function createProjection(geoKeys: unknown): ProjectionResult {
+  if (!geoKeys || typeof geoKeys !== "object" || Object.keys(geoKeys as Record<string, unknown>).length === 0) {
     throw new Error("GeoTIFF coordinate reference system metadata is missing.");
   }
 
-  const geographicCode = Number(geoKeys.GeographicTypeGeoKey);
+  const values = geoKeys as Record<string, unknown>;
+
+  const geographicCode = Number(values.GeographicTypeGeoKey);
   if (geographicCode === 4326) {
     return {
       project: (x, y) => validateProjectedPoint([x, y])
     };
   }
 
-  const projectedCode = Number(geoKeys.ProjectedCSTypeGeoKey);
+  const projectedCode = Number(values.ProjectedCSTypeGeoKey);
   if (projectedCode === 3857) {
     const projection = proj4("EPSG:3857", "WGS84");
     return {
@@ -120,7 +170,7 @@ function createProjection(geoKeys: Record<string, unknown>): ProjectionResult {
     };
   }
 
-  const projectionInfo = geokeysToProj4.toProj4(geoKeys);
+  const projectionInfo = geokeysToProj4.toProj4(geoKeys as Parameters<typeof geokeysToProj4.toProj4>[0]);
   if (!projectionInfo?.proj4) {
     throw new Error("Unable to derive a supported projection from the GeoTIFF metadata.");
   }
@@ -157,25 +207,12 @@ function normalizeRasterArray(rasters: unknown): NumericArray[] {
   throw new Error("GeoTIFF raster data is missing.");
 }
 
-function buildRGBAData(bands: NumericArray[], pixelCount: number): { mode: GeoTIFFOverlay["mode"]; pixels: Uint8ClampedArray } {
+function buildCompositeRGBAData(bands: GeoTIFFBand[], pixelCount: number): Uint8ClampedArray {
   const pixels = new Uint8ClampedArray(pixelCount * 4);
-
-  if (bands.length === 1) {
-    const channel = stretchToByteRange(bands[0]);
-    for (let index = 0; index < pixelCount; index += 1) {
-      const offset = index * 4;
-      pixels[offset] = channel[index];
-      pixels[offset + 1] = channel[index];
-      pixels[offset + 2] = channel[index];
-      pixels[offset + 3] = 255;
-    }
-    return { mode: "grayscale", pixels };
-  }
-
-  const red = stretchToByteRange(bands[0]);
-  const green = stretchToByteRange(bands[1]);
-  const blue = stretchToByteRange(bands[2]);
-  const alpha = bands.length === 4 ? stretchToByteRange(bands[3]) : null;
+  const red = stretchToByteRange(bands[0].values, bands[0].min, bands[0].max);
+  const green = stretchToByteRange(bands[1].values, bands[1].min, bands[1].max);
+  const blue = stretchToByteRange(bands[2].values, bands[2].min, bands[2].max);
+  const alpha = bands.length >= 4 ? stretchToByteRange(bands[3].values, bands[3].min, bands[3].max) : null;
 
   for (let index = 0; index < pixelCount; index += 1) {
     const offset = index * 4;
@@ -185,26 +222,60 @@ function buildRGBAData(bands: NumericArray[], pixelCount: number): { mode: GeoTI
     pixels[offset + 3] = alpha ? alpha[index] : 255;
   }
 
-  return { mode: bands.length === 4 ? "rgba" : "rgb", pixels };
+  return pixels;
 }
 
-function stretchToByteRange(values: NumericArray): Uint8ClampedArray {
+function buildBandRGBAData(band: GeoTIFFBand, pixelCount: number): Uint8ClampedArray {
+  const pixels = new Uint8ClampedArray(pixelCount * 4);
+
+  for (let index = 0; index < pixelCount; index += 1) {
+    const offset = index * 4;
+    const value = Number(band.values[index]);
+    const [red, green, blue] = colorizeNormalizedValue(normalizeValue(value, band.min, band.max));
+    pixels[offset] = red;
+    pixels[offset + 1] = green;
+    pixels[offset + 2] = blue;
+    pixels[offset + 3] = Number.isFinite(value) ? 255 : 0;
+  }
+
+  return pixels;
+}
+
+function stretchToByteRange(values: NumericArray, min: number, max: number): Uint8ClampedArray {
+  const stretched = new Uint8ClampedArray(values.length);
+
+  for (let index = 0; index < values.length; index += 1) {
+    const value = Number(values[index]);
+    stretched[index] = !Number.isFinite(value) ? 0 : Math.round(normalizeValue(value, min, max) * 255);
+  }
+
+  return stretched;
+}
+
+function computeBandRange(values: NumericArray, noDataValue: number | null): { max: number; min: number } {
   let min = Number.POSITIVE_INFINITY;
   let max = Number.NEGATIVE_INFINITY;
 
   for (let index = 0; index < values.length; index += 1) {
     const value = Number(values[index]);
+    if (!Number.isFinite(value) || (noDataValue !== null && value === noDataValue)) {
+      continue;
+    }
+
     min = Math.min(min, value);
     max = Math.max(max, value);
   }
 
-  const range = max - min;
-  const stretched = new Uint8ClampedArray(values.length);
-
-  for (let index = 0; index < values.length; index += 1) {
-    const value = Number(values[index]);
-    stretched[index] = range === 0 ? 255 : Math.round(((value - min) / range) * 255);
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
+    return { max: 1, min: 0 };
   }
 
-  return stretched;
+  return { max, min };
+}
+
+function getNoDataValue(image: unknown): number | null {
+  const candidate = typeof (image as { getGDALNoData?: () => unknown }).getGDALNoData === "function"
+    ? Number((image as { getGDALNoData: () => unknown }).getGDALNoData())
+    : Number.NaN;
+  return Number.isFinite(candidate) ? candidate : null;
 }

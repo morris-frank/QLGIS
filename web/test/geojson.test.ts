@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { computeGeoJSONBounds, prepareGeoJSONOverlay } from "../src/lib/geojson";
+import { computeGeoJSONBounds, detectNumericGeoJSONAttributes, prepareGeoJSONOverlay } from "../src/lib/geojson";
 
 const fixturesRoot = new URL("../../Fixtures/", import.meta.url);
 
@@ -24,3 +24,17 @@ test("point features produce non-degenerate bounds", async () => {
   assert.ok(bounds[1] < bounds[3]);
 });
 
+test("numeric GeoJSON properties are detected for thematic styling", () => {
+  const attributes = detectNumericGeoJSONAttributes({
+    features: [
+      { properties: { elevation: 12, name: "a", population: 10 }, type: "Feature" },
+      { properties: { elevation: 30, population: 25 }, type: "Feature" }
+    ],
+    type: "FeatureCollection"
+  });
+
+  assert.deepEqual(attributes, [
+    { key: "elevation", max: 30, min: 12 },
+    { key: "population", max: 25, min: 10 }
+  ]);
+});
