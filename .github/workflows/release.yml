@@ -19,8 +19,6 @@ jobs:
     runs-on: macos-14
     env:
       RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release_tag || github.ref_name }}
-      KEYCHAIN_PATH: ${{ runner.temp }}/build.keychain-db
-      CERTIFICATE_PATH: ${{ runner.temp }}/developer-id.p12
       EXPORT_OPTIONS_PLIST: ${{ github.workspace }}/Config/ExportOptions.DeveloperID.plist
       RELEASE_ROOT: ${{ github.workspace }}/build/release
       ZIP_PATH: ${{ github.workspace }}/build/release/QLGIS-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release_tag || github.ref_name }}-macOS.zip
@@ -29,6 +27,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set keychain and certificate paths
+        run: |
+          echo "KEYCHAIN_PATH=${RUNNER_TEMP}/build.keychain-db" >> "$GITHUB_ENV"
+          echo "CERTIFICATE_PATH=${RUNNER_TEMP}/developer-id.p12" >> "$GITHUB_ENV"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
