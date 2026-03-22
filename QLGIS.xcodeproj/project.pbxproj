@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,10 +19,10 @@
 		7469C978976C83AAF07B60AC /* PreviewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89CE9A03C4DC4D08B9770B /* PreviewError.swift */; };
 		7B7BD3BBD7A1449C3502E9CC /* PreviewDataResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BDEAB578315BB7031CBEC0 /* PreviewDataResponseBuilder.swift */; };
 		8E7F42AD69DA44D0187AE08F /* PreviewFileKindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A28A455EFFAF6D50CCF0AA5 /* PreviewFileKindTests.swift */; };
-		9ACA4A3AB3414803874E11D2 /* QLGISCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; };
+		9ACA4A3AB3414803874E11D2 /* QLGISCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A0F74E5E6EE54277A984C0C5 /* PreviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C716ADDB58EFC5B200119E9 /* PreviewConfiguration.swift */; };
 		ACFE1C44D5C0BBCD59B0657C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
-		BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */; };
+		BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1A72CA944CB3910E65F3EB3C /* QLGISPreviewExtension.appex */; };
 		C532ADF921BE84120A8B80FE /* PreviewBootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3058DFD9D1B318C73067769 /* PreviewBootstrapTests.swift */; };
 		D6D1C5762AB186353DC3FEFB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD40B88AC68B2F37F746EF19 /* Cocoa.framework */; };
 		E1E25F702FBFDAA2E0E76B8C /* QLGISCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F3A1244741FBEAC0D0F25F /* QLGISCore.framework */; };
@@ -56,15 +56,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		097C542526C0F1F79C4C8797 /* Embed App Extensions */ = {
+		097C542526C0F1F79C4C8797 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed App Extensions */,
+				BED5B7549A9A116EDD40CD0C /* QLGISPreviewExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D5C3F8C9C7D68BEB0687CB5A /* Embed Frameworks */ = {
@@ -247,7 +247,7 @@
 				E8BE1EB92A5CDB7E684BD7B1 /* Sources */,
 				87A18D0D6BE844A0CD778107 /* Frameworks */,
 				CF5E1C9DA28A3EFB5C88F31C /* Resources */,
-				097C542526C0F1F79C4C8797 /* Embed App Extensions */,
+				097C542526C0F1F79C4C8797 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -321,24 +321,10 @@
 		0FDFA808C8DB8BCBD2DB1366 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = QLGIS;
-				TargetAttributes = {
-					3937DE4D2C1025F1DF789853 = {
-						DevelopmentTeam = 8GPF2CCDMW;
-						ProvisioningStyle = Automatic;
-					};
-					3FAEF8A1A5FB8191570D779E = {
-						ProvisioningStyle = Automatic;
-					};
-					593484924627D75F3F546C0B = {
-						ProvisioningStyle = Automatic;
-					};
-					70AB886B5AA33E2DF0C0ED8D = {
-						ProvisioningStyle = Automatic;
-					};
-				};
 			};
 			buildConfigurationList = 991E6106DC86E49176872D12 /* Build configuration list for PBXProject "QLGIS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -488,11 +474,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCoreTests;
@@ -537,9 +528,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -551,7 +544,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -567,11 +561,16 @@
 				CODE_SIGN_ENTITLEMENTS = QLGISPreviewExtension/QLGISPreviewExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = QLGISPreviewExtension/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISPreviewExtension;
@@ -592,18 +591,25 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -624,11 +630,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCoreTests;
@@ -650,11 +661,16 @@
 				CODE_SIGN_ENTITLEMENTS = QLGISPreviewExtension/QLGISPreviewExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = QLGISPreviewExtension/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISPreviewExtension;
@@ -675,18 +691,25 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS.QLGISCore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -711,12 +734,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8GPF2CCDMW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = QLGIS/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS;
@@ -740,12 +767,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8GPF2CCDMW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = QLGIS/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
 				LDPLUSPLUS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qlgis.QLGIS;
@@ -789,9 +820,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
