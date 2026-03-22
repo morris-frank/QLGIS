@@ -58,7 +58,7 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          printf '%s' "${BUILD_CERTIFICATE_BASE64}" | base64 -D -i > "${CERTIFICATE_PATH}"
+          printf '%s' "${BUILD_CERTIFICATE_BASE64}" | base64 -D -o "${CERTIFICATE_PATH}"
           security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
           security set-keychain-settings -lut 21600 "${KEYCHAIN_PATH}"
           security unlock-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
