@@ -152,7 +152,7 @@ configure_target(
     "GENERATE_INFOPLIST_FILE" => "NO",
     "INFOPLIST_FILE" => "QLGIS/Info.plist",
     "LD_RUNPATH_SEARCH_PATHS" => "$(inherited) @executable_path/../Frameworks",
-    "PRODUCT_BUNDLE_IDENTIFIER" => "com.qlgis.QLGIS"
+    "PRODUCT_BUNDLE_IDENTIFIER" => "com.mauricefrank.QLGIS"
   )
 )
 
@@ -163,7 +163,7 @@ configure_target(
     "DEFINES_MODULE" => "YES",
     "GENERATE_INFOPLIST_FILE" => "YES",
     "LD_RUNPATH_SEARCH_PATHS" => "$(inherited) @loader_path/Frameworks @loader_path/../Frameworks",
-    "PRODUCT_BUNDLE_IDENTIFIER" => "com.qlgis.QLGIS.QLGISCore",
+    "PRODUCT_BUNDLE_IDENTIFIER" => "com.mauricefrank.QLGIS.QLGISCore",
     "SKIP_INSTALL" => "YES"
   )
 )
@@ -177,7 +177,7 @@ configure_target(
     "ENABLE_USER_SCRIPT_SANDBOXING" => "NO",
     "INFOPLIST_FILE" => "QLGISPreviewExtension/Info.plist",
     "LD_RUNPATH_SEARCH_PATHS" => "$(inherited) @executable_path/../Frameworks @executable_path/../../Frameworks",
-    "PRODUCT_BUNDLE_IDENTIFIER" => "com.qlgis.QLGIS.QLGISPreviewExtension",
+    "PRODUCT_BUNDLE_IDENTIFIER" => "com.mauricefrank.QLGIS.QLGISPreviewExtension",
     "SKIP_INSTALL" => "YES"
   )
 )
@@ -189,7 +189,7 @@ configure_target(
     "BUNDLE_LOADER" => "",
     "GENERATE_INFOPLIST_FILE" => "YES",
     "LD_RUNPATH_SEARCH_PATHS" => "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks",
-    "PRODUCT_BUNDLE_IDENTIFIER" => "com.qlgis.QLGIS.QLGISCoreTests",
+    "PRODUCT_BUNDLE_IDENTIFIER" => "com.mauricefrank.QLGIS.QLGISCoreTests",
     "TEST_HOST" => ""
   )
 )

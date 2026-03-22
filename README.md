@@ -15,6 +15,7 @@ QLGIS is a macOS 12+ Quick Look preview extension for geospatial data.
 4. Open `QLGIS.xcodeproj`, choose a signing team, and build the `QLGIS` app.
 5. Run the app once so macOS registers the bundled preview extension.
 6. If Finder keeps showing an older preview, run `qlmanage -r && qlmanage -r cache`, then `killall Finder QuickLookUIService`.
+7. For a stable local dev install, run `scripts/install_local.sh`. This builds the app, copies it to `~/Applications/QLGIS.app`, enables the extension, and resets Finder and Quick Look.
 
 ## Development
 

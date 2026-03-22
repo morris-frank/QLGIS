@@ -33,7 +33,7 @@
             <key>QLSupportedContentTypes</key>
             <array>
                 <string>public.geojson</string>
-                <string>com.qlgis.geotiff</string>
+                <string>com.mauricefrank.geotiff</string>
             </array>
             <key>QLSupportsSearchableItems</key>
             <false/>

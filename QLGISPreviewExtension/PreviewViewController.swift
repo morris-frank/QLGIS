@@ -6,7 +6,7 @@ import QLGISCore
 
 final class PreviewViewController: NSViewController, QLPreviewingController {
     private static let webLogHandlerName = "qlgisLog"
-    private let logger = Logger(subsystem: "com.qlgis.QLGIS", category: "PreviewViewController")
+    private let logger = Logger(subsystem: "com.mauricefrank.QLGIS", category: "PreviewViewController")
     private let schemeHandler = PreviewSchemeHandler()
     private lazy var webView: WKWebView = makeWebView()
     private lazy var fallbackLabel: NSTextField = {
