@@ -176,7 +176,6 @@
 				FB89CE9A03C4DC4D08B9770B /* PreviewError.swift */,
 				8E2F24541F9F53A0E564389B /* PreviewFileKind.swift */,
 			);
-			name = QLGISCore;
 			path = QLGISCore;
 			sourceTree = "<group>";
 		};
@@ -205,7 +204,6 @@
 				30D1E031824E66F714E25717 /* QLGISApp.swift */,
 				4B42437AFCAD4FBD32112428 /* Info.plist */,
 			);
-			name = QLGIS;
 			path = QLGIS;
 			sourceTree = "<group>";
 		};
@@ -216,7 +214,6 @@
 				D727DD426A5F35A14250D0F2 /* PreviewSchemeHandler.swift */,
 				3DD5F5E010E14C3A6375D7E0 /* PreviewViewController.swift */,
 			);
-			name = QLGISPreviewExtension;
 			path = QLGISPreviewExtension;
 			sourceTree = "<group>";
 		};
@@ -227,7 +224,6 @@
 				7EB2C321889CBA930024A86D /* PreviewDataResponseBuilderTests.swift */,
 				6A28A455EFFAF6D50CCF0AA5 /* PreviewFileKindTests.swift */,
 			);
-			name = QLGISCoreTests;
 			path = QLGISCoreTests;
 			sourceTree = "<group>";
 		};
@@ -328,6 +324,21 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = QLGIS;
+				TargetAttributes = {
+					3937DE4D2C1025F1DF789853 = {
+						DevelopmentTeam = 8GPF2CCDMW;
+						ProvisioningStyle = Automatic;
+					};
+					3FAEF8A1A5FB8191570D779E = {
+						ProvisioningStyle = Automatic;
+					};
+					593484924627D75F3F546C0B = {
+						ProvisioningStyle = Automatic;
+					};
+					70AB886B5AA33E2DF0C0ED8D = {
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 991E6106DC86E49176872D12 /* Build configuration list for PBXProject "QLGIS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -338,8 +349,6 @@
 				Base,
 			);
 			mainGroup = 145032E2BF33EDC298B0920B;
-			minimizedProjectReferenceProxies = 0;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 00AB2FF5E94563B4F5565299 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -542,8 +551,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -699,10 +707,11 @@
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8GPF2CCDMW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = QLGIS/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
@@ -727,10 +736,11 @@
 				CLANG_ENABLE_EXPLICIT_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8GPF2CCDMW;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = QLGIS/Info.plist;
 				LD = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
