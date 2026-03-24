@@ -50,4 +50,17 @@ public enum PreviewFileKind: String, Codable, Equatable, CaseIterable {
             return "application/geopackage+sqlite3"
         }
     }
+
+    public var displayLabel: String {
+        switch self {
+        case .geojson:
+            return "GeoJSON"
+        case .geotiff:
+            return "GeoTIFF"
+        case .pmtiles:
+            return "PMTiles"
+        case .geopackage:
+            return "GeoPackage"
+        }
+    }
 }

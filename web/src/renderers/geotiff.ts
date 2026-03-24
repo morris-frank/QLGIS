@@ -1,15 +1,12 @@
-import { addBoundsOverlay, removeBoundsOverlay } from "../lib/boundsOverlay";
 import { boundsToMapLibre } from "../lib/bounds";
 import { describeGeoTIFFSelection, drawOverlayCanvas, prepareGeoTIFFPreview, selectorOptionsForGeoTIFF } from "../lib/geotiff";
+import type { PreviewSupplementalInfo } from "../types";
 import type { Renderer } from "../types";
 
 const SOURCE_ID = "qlgis-geotiff-source";
 const LAYER_ID = "qlgis-geotiff-layer";
-const BOUNDS_SOURCE_ID = "qlgis-geotiff-bounds-source";
-const BOUNDS_FILL_LAYER_ID = "qlgis-geotiff-bounds-fill";
-const BOUNDS_LINE_LAYER_ID = "qlgis-geotiff-bounds-line";
 
-export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, map, setFacts, setMeta, setSelectors, setStatus, showBanner }) => {
+export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, dismissSupplementalInfo, map, setMeta, setSelectors, setStatus, showBanner, showSupplementalInfo }) => {
   window.__QLGISNativeLog__?.("info", "starting GeoTIFF renderer", bootstrap.displayName);
   setStatus(`Loading ${bootstrap.displayName}…`);
   clearBanner();
@@ -25,7 +22,6 @@ export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, m
   );
 
   removeGeoTIFFLayers(map);
-  setFacts(overlay.facts);
   applySelection(map, overlay, activeSelection);
   setMeta({
     description: describeGeoTIFFSelection(overlay, activeSelection),
@@ -53,6 +49,15 @@ export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, m
   if (overlay.warnings.length > 0) {
     showBanner(overlay.warnings.join(" "));
   }
+
+  if (overlay.renderMode === "raster") {
+    dismissSupplementalInfo();
+  } else {
+    showSupplementalInfo({
+      bounds: overlay.fitBounds,
+      facts: overlay.facts
+    } satisfies PreviewSupplementalInfo);
+  }
   window.__QLGISNativeLog__?.("info", "GeoTIFF source and layer added");
 
   if (overlay.fitBounds) {
@@ -68,8 +73,6 @@ export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, m
 };
 
 function removeGeoTIFFLayers(map: RendererMap): void {
-  removeBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID);
-
   if (map.getLayer(LAYER_ID)) {
     map.removeLayer(LAYER_ID);
   }
@@ -85,9 +88,6 @@ function applySelection(map: RendererMap, overlay: Awaited<ReturnType<typeof pre
   removeGeoTIFFLayers(map);
 
   if (overlay.renderMode !== "raster" || !overlay.coordinates || !overlay.fitBounds) {
-    if (overlay.fitBounds) {
-      addBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID, overlay.fitBounds);
-    }
     return;
   }
 

@@ -11,6 +11,7 @@
 		0CBC1A1A1879377DBA7729C6 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF6A7921B85C7A88BB133E0 /* PreviewViewController.swift */; };
 		18E20975242DBE1B167494BC /* QuickLookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F242C89A4534D80F599E6FC /* QuickLookUI.framework */; };
 		18F069D53705A0A6405578A1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEBEDBCCF834400633250FF /* ContentView.swift */; };
+		1D4B7A53E8C94399A4D36B10 /* PreviewSupplementalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4B7A53E8C94399A4D36B11 /* PreviewSupplementalInfo.swift */; };
 		2C0D4B69BDB94AE299E210DB /* PreviewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7587EC9F52305904CFD654DF /* PreviewConfiguration.swift */; };
 		31CD31E31963E9711ECC1723 /* PreviewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00AEE201493DCE228C3D0FB /* PreviewError.swift */; };
 		436DEAE9ECBB66F2C7FD59DD /* QLGISCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F31817D12F7A28D0EBA39F8 /* QLGISCore.framework */; };
@@ -84,6 +85,7 @@
 		0A9BB32A79A39C789D5D543F /* Base.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Base.xcconfig; path = Config/Base.xcconfig; sourceTree = "<group>"; };
 		0F31817D12F7A28D0EBA39F8 /* QLGISCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QLGISCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		148E37781337857B875CABD7 /* PreviewDataResponseBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewDataResponseBuilder.swift; sourceTree = "<group>"; };
+		1D4B7A53E8C94399A4D36B11 /* PreviewSupplementalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreviewSupplementalInfo.swift; sourceTree = "<group>"; };
 		1A1BB0A5389AA0C053E61F63 /* QLGISCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QLGISCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F242C89A4534D80F599E6FC /* QuickLookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookUI.framework; path = System/Library/Frameworks/QuickLookUI.framework; sourceTree = "<group>"; };
 		3AB90FEC8FA7720A745CD233 /* QLGISApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QLGISApp.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				148E37781337857B875CABD7 /* PreviewDataResponseBuilder.swift */,
 				E00AEE201493DCE228C3D0FB /* PreviewError.swift */,
 				73AE25C59DC933EFAE2DC3DF /* PreviewFileKind.swift */,
+				1D4B7A53E8C94399A4D36B11 /* PreviewSupplementalInfo.swift */,
 			);
 			path = QLGISCore;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				D1071B2F6DF5DC04F2D930EC /* PreviewDataResponseBuilder.swift in Sources */,
 				31CD31E31963E9711ECC1723 /* PreviewError.swift in Sources */,
 				79E72288CA459C8BCF08B55F /* PreviewFileKind.swift in Sources */,
+				1D4B7A53E8C94399A4D36B10 /* PreviewSupplementalInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

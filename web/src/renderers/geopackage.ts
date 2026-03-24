@@ -1,17 +1,13 @@
 import type { GeoJSONSourceSpecification } from "maplibre-gl";
-import { addBoundsOverlay, removeBoundsOverlay } from "../lib/boundsOverlay";
 import { boundsToMapLibre } from "../lib/bounds";
 import { buildNumericColorExpression } from "../lib/colorRamp";
 import { prepareGeoJSONOverlay, type GeoJSONNumericAttribute } from "../lib/geojson";
-import type { Renderer } from "../types";
+import type { PreviewSupplementalInfo, Renderer } from "../types";
 
 const SOURCE_ID = "qlgis-geopackage-source";
 const FILL_LAYER_ID = "qlgis-geopackage-fill";
 const LINE_LAYER_ID = "qlgis-geopackage-line";
 const POINT_LAYER_ID = "qlgis-geopackage-point";
-const BOUNDS_SOURCE_ID = "qlgis-geopackage-bounds-source";
-const BOUNDS_FILL_LAYER_ID = "qlgis-geopackage-bounds-fill";
-const BOUNDS_LINE_LAYER_ID = "qlgis-geopackage-bounds-line";
 const DEFAULT_FILL_COLOR = "#2a7b9b";
 const DEFAULT_LINE_COLOR = "#0d5f8b";
 const DEFAULT_POINT_COLOR = "#f28f3b";
@@ -40,7 +36,7 @@ declare global {
   }
 }
 
-export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner, map, setFacts, setMeta, setSelectors, setStatus, showBanner }) => {
+export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner, dismissSupplementalInfo, map, setMeta, setSelectors, setStatus, showBanner, showSupplementalInfo }) => {
   window.__QLGISNativeLog__?.("info", "starting GeoPackage renderer", bootstrap.displayName);
   setStatus(`Loading ${bootstrap.displayName}…`);
   clearBanner();
@@ -59,13 +55,13 @@ export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner
       { label: "Tile Tables", value: String(tileTables.length) },
       { label: "Tables", value: tileTables.join(", ") || "None" }
     ];
-    setFacts(facts);
     setMeta({
       description: "Showing GeoPackage metadata because no feature tables are available for direct vector preview.",
       eyebrow: "GEOPACKAGE",
       title: bootstrap.displayName
     });
 
+    let bounds: [number, number, number, number] | null = null;
     const firstTileTable = tileTables[0];
     if (firstTileTable) {
       const contents = preview.getTableContents(firstTileTable);
@@ -74,11 +70,15 @@ export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner
       const maxX = Number(contents?.max_x);
       const maxY = Number(contents?.max_y);
       if ([minX, minY, maxX, maxY].every((value) => Number.isFinite(value))) {
-        addBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID, [minX, minY, maxX, maxY]);
-        map.fitBounds(boundsToMapLibre([minX, minY, maxX, maxY]), { animate: false, padding: 40 });
+        bounds = [minX, minY, maxX, maxY];
+        map.fitBounds(boundsToMapLibre(bounds), { animate: false, padding: 40 });
       }
     }
 
+    showSupplementalInfo({
+      bounds,
+      facts
+    } satisfies PreviewSupplementalInfo);
     setStatus(null);
     showBanner("This GeoPackage does not contain feature tables. Showing metadata instead.");
     return () => {
@@ -147,14 +147,6 @@ export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner
       eyebrow: "GEOPACKAGE",
       title: bootstrap.displayName
     });
-    setFacts([
-      { label: "Feature Tables", value: String(featureTables.length) },
-      { label: "Tile Tables", value: String(tileTables.length) },
-      { label: "Active Table", value: activeTable },
-      { label: "Features", value: String(overlay.featureCount) },
-      { label: "CRS", value: overlay.crsLabel },
-      { label: "Variables", value: overlay.numericAttributes.length > 0 ? overlay.numericAttributes.map((attribute) => attribute.key).join(", ") : "None" }
-    ]);
     setSelectors([
       {
         label: "Table",
@@ -180,6 +172,7 @@ export const renderGeoPackagePreview: Renderer = async ({ bootstrap, clearBanner
       }
     ]);
     map.fitBounds(boundsToMapLibre(overlay.fitBounds), { animate: false, padding: 40 });
+    dismissSupplementalInfo();
   };
 
   applyTable(activeTable);
@@ -227,7 +220,6 @@ function applyGeoPackageAttribute(map: Parameters<Renderer>[0]["map"], attribute
 }
 
 function removeGeoPackageLayers(map: Parameters<Renderer>[0]["map"]): void {
-  removeBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID);
   for (const layerId of [POINT_LAYER_ID, LINE_LAYER_ID, FILL_LAYER_ID]) {
     if (map.getLayer(layerId)) {
       map.removeLayer(layerId);

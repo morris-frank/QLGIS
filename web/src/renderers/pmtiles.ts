@@ -7,7 +7,7 @@ let protocolRegistered = false;
 const SOURCE_ID = "qlgis-pmtiles-source";
 const LAYER_PREFIX = "qlgis-pmtiles-layer";
 
-export const renderPMTilesPreview: Renderer = async ({ bootstrap, clearBanner, map, setFacts, setMeta, setSelectors, setStatus }) => {
+export const renderPMTilesPreview: Renderer = async ({ bootstrap, clearBanner, dismissSupplementalInfo, map, setMeta, setSelectors, setStatus }) => {
   window.__QLGISNativeLog__?.("info", "starting PMTiles renderer", bootstrap.displayName);
   setStatus(`Loading ${bootstrap.displayName}…`);
   clearBanner();
@@ -54,11 +54,6 @@ export const renderPMTilesPreview: Renderer = async ({ bootstrap, clearBanner, m
       eyebrow: "PMTILES",
       title: bootstrap.displayName
     });
-    setFacts([
-      { label: "Type", value: "Vector" },
-      { label: "Layers", value: layerIds.join(", ") },
-      { label: "Zoom", value: `${header.minZoom}–${header.maxZoom}` }
-    ]);
   } else if (RASTER_TILE_TYPES.has(header.tileType)) {
     map.addSource(SOURCE_ID, {
       maxzoom: header.maxZoom,
@@ -82,11 +77,6 @@ export const renderPMTilesPreview: Renderer = async ({ bootstrap, clearBanner, m
       eyebrow: "PMTILES",
       title: bootstrap.displayName
     });
-    setFacts([
-      { label: "Type", value: "Raster" },
-      { label: "Zoom", value: `${header.minZoom}–${header.maxZoom}` },
-      { label: "Bounds", value: [header.minLon, header.minLat, header.maxLon, header.maxLat].map((value) => value.toFixed(4)).join(", ") }
-    ]);
   } else {
     throw new Error("This PMTiles archive uses a tile type that is not supported in the preview yet.");
   }
@@ -103,6 +93,7 @@ export const renderPMTilesPreview: Renderer = async ({ bootstrap, clearBanner, m
     map.jumpTo({ center: [header.centerLon, header.centerLat], zoom: header.centerZoom });
   }
 
+  dismissSupplementalInfo();
   setStatus(null);
 
   return () => {

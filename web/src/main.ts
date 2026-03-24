@@ -1,10 +1,11 @@
 import maplibregl, { Map } from "maplibre-gl";
+import { addBoundsOverlay, removeBoundsOverlay } from "./lib/boundsOverlay";
 import { renderGeoPackagePreview } from "./renderers/geopackage";
 import { renderGeoJSONPreview } from "./renderers/geojson";
 import { renderGeoTIFFPreview } from "./renderers/geotiff";
 import { renderPMTilesPreview } from "./renderers/pmtiles";
 import "./styles.css";
-import type { Cleanup, FactItem, PreviewBootstrap, Renderer, PreviewMeta, SelectorConfig } from "./types";
+import type { BoundsTuple, Cleanup, FactItem, PreviewBootstrap, PreviewMeta, PreviewSupplementalInfo, Renderer, SelectorConfig } from "./types";
 
 const renderers: Record<PreviewBootstrap["kind"], Renderer> = {
   geopackage: renderGeoPackagePreview,
@@ -21,15 +22,22 @@ const selectorsElement = document.querySelector<HTMLDivElement>("#selectors");
 const factsElement = document.querySelector<HTMLDListElement>("#facts");
 const statusElement = document.querySelector<HTMLDivElement>("#status");
 const bannerElement = document.querySelector<HTMLDivElement>("#banner");
+const SUPPLEMENTAL_BOUNDS_SOURCE_ID = "qlgis-supplemental-bounds-source";
+const SUPPLEMENTAL_BOUNDS_FILL_LAYER_ID = "qlgis-supplemental-bounds-fill";
+const SUPPLEMENTAL_BOUNDS_LINE_LAYER_ID = "qlgis-supplemental-bounds-line";
 
 let mapPromise: Promise<Map> | null = null;
 let activeCleanup: Cleanup | null = null;
+let activeMap: Map | null = null;
+let currentSupplementalInfo: PreviewSupplementalInfo | null = null;
 let resizeObserverAttached = false;
+let supplementalInfoDismissed = false;
 
 window.__QLGISNativeLog__ = logToNative;
 
 window.QLGISPreview = {
-  render: renderPreview
+  render: renderPreview,
+  updateSupplementalInfo
 };
 
 logToNative("info", "web preview bootstrap loaded");
@@ -57,7 +65,6 @@ async function renderPreview(bootstrap: PreviewBootstrap): Promise<void> {
       throw new Error(`Unsupported preview kind: ${bootstrap.kind}`);
     }
 
-    const map = await ensureMap(bootstrap.styleURL);
     if (activeCleanup) {
       activeCleanup();
       activeCleanup = null;
@@ -69,17 +76,19 @@ async function renderPreview(bootstrap: PreviewBootstrap): Promise<void> {
       title: bootstrap.displayName
     });
     setSelectors([]);
-    setFacts([]);
+    primeSupplementalInfo(bootstrap.supplementalInfo ?? null);
     clearBanner();
 
+    const map = await ensureMap(bootstrap.styleURL);
     activeCleanup = await renderer({
       bootstrap,
       clearBanner,
+      dismissSupplementalInfo,
       map,
-      setFacts,
       setMeta,
       setSelectors,
       setStatus,
+      showSupplementalInfo,
       showBanner
     });
   } catch (error) {
@@ -115,7 +124,9 @@ async function ensureMap(styleURL: string): Promise<Map> {
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.once("load", () => {
+      activeMap = map;
       map.resize();
+      syncSupplementalInfoPresentation();
       logToNative("info", "base map loaded");
       resolve(map);
     });
@@ -127,6 +138,28 @@ async function ensureMap(styleURL: string): Promise<Map> {
   });
 
   return mapPromise;
+}
+
+function primeSupplementalInfo(info: PreviewSupplementalInfo | null): void {
+  currentSupplementalInfo = info;
+  supplementalInfoDismissed = false;
+  syncSupplementalInfoPresentation();
+}
+
+function updateSupplementalInfo(info: PreviewSupplementalInfo): void {
+  currentSupplementalInfo = info;
+  syncSupplementalInfoPresentation();
+}
+
+function showSupplementalInfo(info: PreviewSupplementalInfo): void {
+  currentSupplementalInfo = info;
+  supplementalInfoDismissed = false;
+  syncSupplementalInfoPresentation();
+}
+
+function dismissSupplementalInfo(): void {
+  supplementalInfoDismissed = true;
+  syncSupplementalInfoPresentation();
 }
 
 function setMeta(meta: PreviewMeta): void {
@@ -241,6 +274,22 @@ function setFacts(facts: FactItem[]): void {
   factsElement.hidden = false;
 }
 
+function syncSupplementalInfoPresentation(): void {
+  const facts = !supplementalInfoDismissed ? currentSupplementalInfo?.facts ?? [] : [];
+  setFacts(facts);
+
+  if (!activeMap) {
+    return;
+  }
+
+  const bounds = !supplementalInfoDismissed ? normalizeBounds(currentSupplementalInfo?.bounds) : null;
+  if (bounds) {
+    addBoundsOverlay(activeMap, SUPPLEMENTAL_BOUNDS_SOURCE_ID, SUPPLEMENTAL_BOUNDS_FILL_LAYER_ID, SUPPLEMENTAL_BOUNDS_LINE_LAYER_ID, bounds);
+  } else {
+    removeBoundsOverlay(activeMap, SUPPLEMENTAL_BOUNDS_SOURCE_ID, SUPPLEMENTAL_BOUNDS_FILL_LAYER_ID, SUPPLEMENTAL_BOUNDS_LINE_LAYER_ID);
+  }
+}
+
 function logToNative(level: string, message: string, details?: string): void {
   const bridge = (window as any).webkit?.messageHandlers?.qlgisLog;
   if (!bridge || typeof bridge.postMessage !== "function") {
@@ -284,6 +333,15 @@ function attachResizeHandling(map: Map): void {
   resizeObserverAttached = true;
   new ResizeObserver(resizeMap).observe(mapElement);
   window.addEventListener("resize", resizeMap);
+}
+
+function normalizeBounds(bounds: PreviewSupplementalInfo["bounds"]): BoundsTuple | null {
+  if (!Array.isArray(bounds) || bounds.length !== 4) {
+    return null;
+  }
+
+  const normalized = bounds.map((value) => Number(value)) as BoundsTuple;
+  return normalized.every((value) => Number.isFinite(value)) ? normalized : null;
 }
 
 function defaultDescription(kind: PreviewBootstrap["kind"]): string {

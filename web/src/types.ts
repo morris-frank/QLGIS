@@ -7,6 +7,7 @@ export interface PreviewBootstrap {
   displayName: string;
   dataURL: string;
   styleURL: string;
+  supplementalInfo?: PreviewSupplementalInfo;
 }
 
 export type BoundsTuple = [number, number, number, number];
@@ -35,14 +36,20 @@ export interface FactItem {
   value: string;
 }
 
+export interface PreviewSupplementalInfo {
+  facts: FactItem[];
+  bounds?: BoundsTuple | null;
+}
+
 export interface RendererContext {
   bootstrap: PreviewBootstrap;
   clearBanner: () => void;
+  dismissSupplementalInfo: () => void;
   map: Map;
-  setFacts: (facts: FactItem[]) => void;
   setMeta: (meta: PreviewMeta) => void;
   setSelectors: (configs: SelectorConfig[]) => void;
   setStatus: (message: string | null) => void;
+  showSupplementalInfo: (info: PreviewSupplementalInfo) => void;
   showBanner: (message: string) => void;
 }
 
@@ -55,6 +62,7 @@ declare global {
     __QLGISNativeLog__?: (level: string, message: string, details?: string) => void;
     QLGISPreview?: {
       render: (bootstrap: PreviewBootstrap) => Promise<void>;
+      updateSupplementalInfo: (info: PreviewSupplementalInfo) => void;
     };
   }
 }
