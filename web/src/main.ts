@@ -1,11 +1,13 @@
 import maplibregl, { Map } from "maplibre-gl";
+import { renderGeoPackagePreview } from "./renderers/geopackage";
 import { renderGeoJSONPreview } from "./renderers/geojson";
 import { renderGeoTIFFPreview } from "./renderers/geotiff";
 import { renderPMTilesPreview } from "./renderers/pmtiles";
 import "./styles.css";
-import type { Cleanup, PreviewBootstrap, Renderer, PreviewMeta, SelectorConfig } from "./types";
+import type { Cleanup, FactItem, PreviewBootstrap, Renderer, PreviewMeta, SelectorConfig } from "./types";
 
 const renderers: Record<PreviewBootstrap["kind"], Renderer> = {
+  geopackage: renderGeoPackagePreview,
   geojson: renderGeoJSONPreview,
   geotiff: renderGeoTIFFPreview,
   pmtiles: renderPMTilesPreview
@@ -15,15 +17,13 @@ const mapElement = document.querySelector<HTMLDivElement>("#map");
 const metaEyebrowElement = document.querySelector<HTMLDivElement>("#meta-eyebrow");
 const metaTitleElement = document.querySelector<HTMLDivElement>("#meta-title");
 const metaDescriptionElement = document.querySelector<HTMLDivElement>("#meta-description");
-const selectorGroupElement = document.querySelector<HTMLLabelElement>("#selector-group");
-const selectorLabelElement = document.querySelector<HTMLSpanElement>("#selector-label");
-const selectorInputElement = document.querySelector<HTMLSelectElement>("#selector-input");
+const selectorsElement = document.querySelector<HTMLDivElement>("#selectors");
+const factsElement = document.querySelector<HTMLDListElement>("#facts");
 const statusElement = document.querySelector<HTMLDivElement>("#status");
 const bannerElement = document.querySelector<HTMLDivElement>("#banner");
 
 let mapPromise: Promise<Map> | null = null;
 let activeCleanup: Cleanup | null = null;
-let selectorOnChange: ((value: string) => void) | null = null;
 let resizeObserverAttached = false;
 
 window.__QLGISNativeLog__ = logToNative;
@@ -38,7 +38,7 @@ if (window.__QLGIS_BOOTSTRAP__) {
   logToNative("info", "found bootstrap payload on initial load");
   void renderPreview(window.__QLGIS_BOOTSTRAP__);
 } else {
-  setStatus("Waiting for preview data…");
+  setStatus("QLGIS preview shell ready.");
 }
 
 window.addEventListener("error", (event) => {
@@ -68,15 +68,17 @@ async function renderPreview(bootstrap: PreviewBootstrap): Promise<void> {
       eyebrow: bootstrap.kind.toUpperCase(),
       title: bootstrap.displayName
     });
-    setSelector(null);
+    setSelectors([]);
+    setFacts([]);
     clearBanner();
 
     activeCleanup = await renderer({
       bootstrap,
       clearBanner,
       map,
+      setFacts,
       setMeta,
-      setSelector,
+      setSelectors,
       setStatus,
       showBanner
     });
@@ -142,31 +144,47 @@ function setMeta(meta: PreviewMeta): void {
   }
 }
 
-function setSelector(config: SelectorConfig | null): void {
-  if (!selectorGroupElement || !selectorLabelElement || !selectorInputElement) {
+function setSelectors(configs: SelectorConfig[]): void {
+  if (!selectorsElement) {
     return;
   }
 
-  selectorOnChange = null;
-  selectorInputElement.replaceChildren();
+  selectorsElement.replaceChildren();
 
-  if (!config || config.options.length < 2) {
-    selectorGroupElement.hidden = true;
+  const visibleConfigs = configs.filter((config) => config.options.length > 1);
+  if (visibleConfigs.length === 0) {
+    selectorsElement.hidden = true;
     return;
   }
 
-  selectorGroupElement.hidden = false;
-  selectorLabelElement.textContent = config.label;
+  selectorsElement.hidden = false;
+  for (const config of visibleConfigs) {
+    const wrapper = document.createElement("label");
+    wrapper.className = "selector";
 
-  for (const option of config.options) {
-    const element = document.createElement("option");
-    element.value = option.value;
-    element.textContent = option.label;
-    selectorInputElement.appendChild(element);
+    const label = document.createElement("span");
+    label.className = "selector__label";
+    label.textContent = config.label;
+    wrapper.appendChild(label);
+
+    const input = document.createElement("select");
+    input.className = "selector__input";
+    input.value = config.value;
+
+    for (const option of config.options) {
+      const element = document.createElement("option");
+      element.value = option.value;
+      element.textContent = option.label;
+      input.appendChild(element);
+    }
+
+    input.value = config.value;
+    input.addEventListener("change", (event) => {
+      config.onChange((event.target as HTMLSelectElement).value);
+    });
+    wrapper.appendChild(input);
+    selectorsElement.appendChild(wrapper);
   }
-
-  selectorInputElement.value = config.value;
-  selectorOnChange = config.onChange;
 }
 
 function setStatus(message: string | null): void {
@@ -195,6 +213,32 @@ function clearBanner(): void {
 
   bannerElement.hidden = true;
   bannerElement.textContent = "";
+}
+
+function setFacts(facts: FactItem[]): void {
+  if (!factsElement) {
+    return;
+  }
+
+  factsElement.replaceChildren();
+  if (facts.length === 0) {
+    factsElement.hidden = true;
+    return;
+  }
+
+  for (const fact of facts) {
+    const label = document.createElement("dt");
+    label.className = "facts__label";
+    label.textContent = fact.label;
+    factsElement.appendChild(label);
+
+    const value = document.createElement("dd");
+    value.className = "facts__value";
+    value.textContent = fact.value;
+    factsElement.appendChild(value);
+  }
+
+  factsElement.hidden = false;
 }
 
 function logToNative(level: string, message: string, details?: string): void {
@@ -250,10 +294,7 @@ function defaultDescription(kind: PreviewBootstrap["kind"]): string {
       return "Inspecting raster coverage on top of the basemap.";
     case "pmtiles":
       return "Inspecting tiled content from a PMTiles archive.";
+    case "geopackage":
+      return "Inspecting GeoPackage tables and metadata.";
   }
 }
-
-selectorInputElement?.addEventListener("change", (event) => {
-  const nextValue = (event.target as HTMLSelectElement).value;
-  selectorOnChange?.(nextValue);
-});

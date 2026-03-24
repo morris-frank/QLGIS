@@ -35,6 +35,7 @@
                 <string>public.geojson</string>
                 <string>com.mauricefrank.geotiff</string>
                 <string>com.mauricefrank.pmtiles</string>
+                <string>com.mauricefrank.geopackage</string>
             </array>
             <key>QLSupportsSearchableItems</key>
             <false/>

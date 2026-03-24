@@ -1,35 +1,40 @@
+import { addBoundsOverlay, removeBoundsOverlay } from "../lib/boundsOverlay";
 import { boundsToMapLibre } from "../lib/bounds";
-import { describeGeoTIFFSelection, drawOverlayCanvas, prepareGeoTIFFOverlay, selectorOptionsForGeoTIFF } from "../lib/geotiff";
+import { describeGeoTIFFSelection, drawOverlayCanvas, prepareGeoTIFFPreview, selectorOptionsForGeoTIFF } from "../lib/geotiff";
 import type { Renderer } from "../types";
 
 const SOURCE_ID = "qlgis-geotiff-source";
 const LAYER_ID = "qlgis-geotiff-layer";
+const BOUNDS_SOURCE_ID = "qlgis-geotiff-bounds-source";
+const BOUNDS_FILL_LAYER_ID = "qlgis-geotiff-bounds-fill";
+const BOUNDS_LINE_LAYER_ID = "qlgis-geotiff-bounds-line";
 
-export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, map, setMeta, setSelector, setStatus }) => {
+export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, map, setFacts, setMeta, setSelectors, setStatus, showBanner }) => {
   window.__QLGISNativeLog__?.("info", "starting GeoTIFF renderer", bootstrap.displayName);
   setStatus(`Loading ${bootstrap.displayName}…`);
   clearBanner();
 
   const response = await fetch(bootstrap.dataURL);
   window.__QLGISNativeLog__?.("info", "GeoTIFF bytes fetched", `ok=${response.ok} status=${response.status}`);
-  const overlay = await prepareGeoTIFFOverlay(await response.arrayBuffer());
+  const overlay = await prepareGeoTIFFPreview(await response.arrayBuffer());
   let activeSelection = overlay.defaultSelection;
   window.__QLGISNativeLog__?.(
     "info",
     "GeoTIFF overlay prepared",
-    JSON.stringify({ coordinates: overlay.coordinates, fitBounds: overlay.fitBounds, height: overlay.height, selection: activeSelection, width: overlay.width })
+    JSON.stringify({ fitBounds: overlay.fitBounds, height: overlay.height, renderMode: overlay.renderMode, selection: activeSelection, width: overlay.width })
   );
 
   removeGeoTIFFLayers(map);
+  setFacts(overlay.facts);
   applySelection(map, overlay, activeSelection);
   setMeta({
     description: describeGeoTIFFSelection(overlay, activeSelection),
     eyebrow: "GEOTIFF",
     title: bootstrap.displayName
   });
-  setSelector(
+  setSelectors(
     overlay.bands.length > 1
-      ? {
+      ? [{
           label: "Raster Variable",
           onChange: (value) => {
             activeSelection = value;
@@ -42,22 +47,29 @@ export const renderGeoTIFFPreview: Renderer = async ({ bootstrap, clearBanner, m
           },
           options: selectorOptionsForGeoTIFF(overlay),
           value: activeSelection
-        }
-      : null
+        }]
+      : []
   );
+  if (overlay.warnings.length > 0) {
+    showBanner(overlay.warnings.join(" "));
+  }
   window.__QLGISNativeLog__?.("info", "GeoTIFF source and layer added");
 
-  map.fitBounds(boundsToMapLibre(overlay.fitBounds), { animate: false, padding: 40 });
-  window.__QLGISNativeLog__?.("info", "GeoTIFF map fit applied", JSON.stringify(overlay.fitBounds));
+  if (overlay.fitBounds) {
+    map.fitBounds(boundsToMapLibre(overlay.fitBounds), { animate: false, padding: 40 });
+    window.__QLGISNativeLog__?.("info", "GeoTIFF map fit applied", JSON.stringify(overlay.fitBounds));
+  }
   setStatus(null);
 
   return () => {
-    setSelector(null);
+    setSelectors([]);
     removeGeoTIFFLayers(map);
   };
 };
 
 function removeGeoTIFFLayers(map: RendererMap): void {
+  removeBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID);
+
   if (map.getLayer(LAYER_ID)) {
     map.removeLayer(LAYER_ID);
   }
@@ -69,11 +81,19 @@ function removeGeoTIFFLayers(map: RendererMap): void {
 
 type RendererMap = Parameters<Renderer>[0]["map"];
 
-function applySelection(map: RendererMap, overlay: Awaited<ReturnType<typeof prepareGeoTIFFOverlay>>, selection: string): void {
+function applySelection(map: RendererMap, overlay: Awaited<ReturnType<typeof prepareGeoTIFFPreview>>, selection: string): void {
+  removeGeoTIFFLayers(map);
+
+  if (overlay.renderMode !== "raster" || !overlay.coordinates || !overlay.fitBounds) {
+    if (overlay.fitBounds) {
+      addBoundsOverlay(map, BOUNDS_SOURCE_ID, BOUNDS_FILL_LAYER_ID, BOUNDS_LINE_LAYER_ID, overlay.fitBounds);
+    }
+    return;
+  }
+
   const canvas = drawOverlayCanvas(overlay, selection);
   const imageURL = canvas.toDataURL("image/png");
 
-  removeGeoTIFFLayers(map);
   map.addSource(SOURCE_ID, {
     coordinates: overlay.coordinates,
     type: "image",

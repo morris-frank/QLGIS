@@ -22,6 +22,11 @@ final class PreviewFileKindTests: XCTestCase {
         XCTAssertEqual(try PreviewFileKind.detect(from: url), .pmtiles)
     }
 
+    func testDetectsGeoPackageByExtension() throws {
+        let url = URL(fileURLWithPath: "/tmp/sample.gpkg")
+        XCTAssertEqual(try PreviewFileKind.detect(from: url), .geopackage)
+    }
+
     func testRejectsUnknownExtensions() {
         let url = URL(fileURLWithPath: "/tmp/sample.shp")
         XCTAssertThrowsError(try PreviewFileKind.detect(from: url))

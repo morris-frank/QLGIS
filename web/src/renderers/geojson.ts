@@ -12,14 +12,14 @@ const DEFAULT_FILL_COLOR = "#2a7b9b";
 const DEFAULT_LINE_COLOR = "#0d5f8b";
 const DEFAULT_POINT_COLOR = "#f28f3b";
 
-export const renderGeoJSONPreview: Renderer = async ({ bootstrap, clearBanner, map, setMeta, setSelector, setStatus }) => {
+export const renderGeoJSONPreview: Renderer = async ({ bootstrap, clearBanner, map, setFacts, setMeta, setSelectors, setStatus }) => {
   window.__QLGISNativeLog__?.("info", "starting GeoJSON renderer", bootstrap.displayName);
   setStatus(`Loading ${bootstrap.displayName}…`);
   clearBanner();
 
   const response = await fetch(bootstrap.dataURL);
   const rawText = await response.text();
-  const { fitBounds, geojson, numericAttributes } = prepareGeoJSONOverlay(rawText);
+  const { crsLabel, featureCount, fitBounds, geojson, numericAttributes } = prepareGeoJSONOverlay(rawText);
   window.__QLGISNativeLog__?.("info", "GeoJSON overlay prepared", JSON.stringify(fitBounds));
 
   removeGeoJSONLayers(map);
@@ -71,9 +71,14 @@ export const renderGeoJSONPreview: Renderer = async ({ bootstrap, clearBanner, m
     eyebrow: "GEOJSON",
     title: bootstrap.displayName
   });
-  setSelector(
+  setFacts([
+    { label: "Features", value: String(featureCount) },
+    { label: "CRS", value: crsLabel },
+    { label: "Variables", value: numericAttributes.length > 0 ? numericAttributes.map((attribute) => attribute.key).join(", ") : "None" }
+  ]);
+  setSelectors(
     numericAttributes.length > 1
-      ? {
+      ? [{
           label: "Variable",
           onChange: (value) => {
             const nextAttribute = numericAttributes.find((candidate) => candidate.key === value) ?? null;
@@ -89,15 +94,15 @@ export const renderGeoJSONPreview: Renderer = async ({ bootstrap, clearBanner, m
             value: attribute.key
           })),
           value: initialAttribute?.key ?? numericAttributes[0]?.key ?? ""
-        }
-      : null
+        }]
+      : []
   );
 
   map.fitBounds(boundsToMapLibre(fitBounds), { animate: false, padding: 40 });
   setStatus(null);
 
   return () => {
-    setSelector(null);
+    setSelectors([]);
     removeGeoJSONLayers(map);
   };
 };

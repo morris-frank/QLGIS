@@ -5,6 +5,7 @@ public enum PreviewFileKind: String, Codable, Equatable, CaseIterable {
     case geojson
     case geotiff
     case pmtiles
+    case geopackage
 
     public static func detect(from fileURL: URL) throws -> PreviewFileKind {
         let values = try? fileURL.resourceValues(forKeys: [.contentTypeKey])
@@ -14,6 +15,9 @@ public enum PreviewFileKind: String, Codable, Equatable, CaseIterable {
             }
             if contentType.identifier == "com.mauricefrank.pmtiles" {
                 return .pmtiles
+            }
+            if contentType.identifier == "com.mauricefrank.geopackage" {
+                return .geopackage
             }
             if contentType.conforms(to: .tiff) {
                 return .geotiff
@@ -27,6 +31,8 @@ public enum PreviewFileKind: String, Codable, Equatable, CaseIterable {
             return .geotiff
         case "pmtiles":
             return .pmtiles
+        case "gpkg", "geopackage":
+            return .geopackage
         default:
             throw PreviewError.unsupportedContentType(fileURL.pathExtension)
         }
@@ -40,6 +46,8 @@ public enum PreviewFileKind: String, Codable, Equatable, CaseIterable {
             return "image/tiff"
         case .pmtiles:
             return "application/vnd.pmtiles"
+        case .geopackage:
+            return "application/geopackage+sqlite3"
         }
     }
 }

@@ -1,6 +1,6 @@
 import type { Map } from "maplibre-gl";
 
-export type PreviewKind = "geojson" | "geotiff" | "pmtiles";
+export type PreviewKind = "geojson" | "geotiff" | "pmtiles" | "geopackage";
 
 export interface PreviewBootstrap {
   kind: PreviewKind;
@@ -30,12 +30,18 @@ export interface SelectorConfig {
   value: string;
 }
 
+export interface FactItem {
+  label: string;
+  value: string;
+}
+
 export interface RendererContext {
   bootstrap: PreviewBootstrap;
   clearBanner: () => void;
   map: Map;
+  setFacts: (facts: FactItem[]) => void;
   setMeta: (meta: PreviewMeta) => void;
-  setSelector: (config: SelectorConfig | null) => void;
+  setSelectors: (configs: SelectorConfig[]) => void;
   setStatus: (message: string | null) => void;
   showBanner: (message: string) => void;
 }

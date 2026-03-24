@@ -23,3 +23,5 @@ await esbuild.build({
 });
 
 await cp(resolve(root, "src/index.html"), resolve(dist, "index.html"));
+await cp(resolve(root, "node_modules/@ngageoint/geopackage/dist/geopackage.min.js"), resolve(dist, "geopackage.min.js"));
+await cp(resolve(root, "node_modules/@ngageoint/geopackage/dist/sql-wasm.wasm"), resolve(dist, "sql-wasm.wasm"));

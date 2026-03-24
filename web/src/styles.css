@@ -90,6 +90,12 @@ body {
   color: rgba(23, 55, 83, 0.78);
 }
 
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .selector {
   display: flex;
   flex-direction: column;
@@ -113,6 +119,30 @@ body {
   background: rgba(255, 255, 255, 0.92);
   color: #173753;
   font: inherit;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: minmax(76px, auto) minmax(0, 1fr);
+  gap: 6px 10px;
+  margin: 0;
+}
+
+.facts__label {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(20, 48, 75, 0.58);
+}
+
+.facts__value {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(23, 55, 83, 0.84);
+  word-break: break-word;
 }
 
 .hud__status {
